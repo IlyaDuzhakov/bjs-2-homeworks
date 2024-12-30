@@ -4,7 +4,6 @@ function getArrayParams(...arr) {
 	let sum = 0;
 	for (let i = 0; i < arr.length; i = i + 1) {
 		sum = sum + arr[i];
-		// console.log(arr[i])
 	}
 	let avg = Number((sum / arr.length).toFixed(2)); 
 	const result = {
@@ -65,6 +64,13 @@ function averageEvenElementsWorker(...arr) {
 	return result
 }
 
-function makeWork (arrOfArr, func) {
-
+function makeWork(arrOfArr, func) {
+	let maxWorkerResult = -Infinity
+	for (let i = 0; i < arrOfArr.length; i = i + 1) {
+		let result = func(...arrOfArr[i])
+		if (result > maxWorkerResult) {
+			maxWorkerResult = result
+		}
+	}
+	return maxWorkerResult
 }
