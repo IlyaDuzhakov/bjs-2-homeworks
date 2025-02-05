@@ -140,3 +140,76 @@ console.log("Количество книг после выдачи: " + library.
 library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
 console.log(library.books)
 
+// ------------------------------------------------ Сложное задание -------------------------------------------------------------------
+
+
+class Student {
+    // название функции конструктора принято писать с большой буквы
+    constructor(name) {
+      this.name = name;
+      this.marks = {};
+    }
+    getAverageBySubject(subject) {
+      if (!this.marks[subject]) {
+        return 0;
+      } else {
+        // let sum = 0
+        // // console.log(this.marks[subject])
+        // for (let i = 0; i < this.marks[subject].length; i = i + 1) {
+        //     // console.log(this.marks[subject][i])
+        //     sum = sum + this.marks[subject][i]
+        // }
+        // let average = sum / this.marks[subject].length
+        // return average
+        const reduceSum = this.marks[subject].reduce((sum, el) => {
+          return sum + el;
+        }, 0);
+        const average = reduceSum / this.marks[subject].length;
+        return average;
+      }
+    }
+    getAverage() {
+      const allSubjects = Object.keys(this.marks); // Object.keys возвращает массив всех ключей объекта
+      // console.log (allSubjects)
+      if (allSubjects.length === 0 ) {
+        return 0
+      }
+      let sum = 0;
+      for (let i = 0; i < allSubjects.length; i = i + 1) {
+        // console.log(allSubjects[i])
+        const curAverage = this.getAverageBySubject(allSubjects[i]);
+        // console.log(curAverage)
+        sum = sum + curAverage;
+      }
+      const average = sum / allSubjects.length;
+      // console.log(average)
+      return average;
+    }
+ 
+    addMark(mark, subject) {
+      if (mark >= 2 && mark <= 5) {
+        if (!this.marks[subject]) {
+          // Это проверка, что предмет (ключ) отсутствует в объекте. !false === true (! - восклицательный знак позволяет получить противоположное булевое значение)
+          this.marks[subject] = [];
+          this.marks[subject].push(mark);
+        } else {
+          this.marks[subject].push(mark);
+        }
+        // console.log(this.marks[subject]) // Если ключом у нас является переменная, то доступ к значению по ключу мы получаем через []
+      } else {
+        return;
+      }
+    }
+  }
+  
+  const student1 = new Student("Василий");
+  student1.addMark(4, "Физика");
+  student1.addMark(5, "Физика");
+  student1.addMark(3, "Физика");
+  student1.addMark(3, "Физика");
+  student1.addMark(2, "Физика");
+  student1.addMark(5, "Ma");
+  student1.getAverageBySubject("Физика");
+  student1.getAverage();
+
+  
